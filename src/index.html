@@ -6,32 +6,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;600&family=Secular+One&display=swap');</style>
   <link rel="stylesheet" href="./assets/css/style.scss">
-  <title>threejs-ts-starter</title>
+  <title>WebGL Works | 033 | Gallery</title>
 </head>
 <body>
   <div class="webgl"></div>
-  <header class="header"><h1>three-starter</h1></header>
-  <main>
-    <div class="mv">
-      <div class="mv__desc">
-        <h2 class="mv__title">three-starter</h2>
-        <p class="mv__text">
-          <span>This is a development template for Three.js.</span>
-          <span>The development environment uses Vite, TypeScript, and Three.js.</span>
-          <span>It is designed to support the efficient development of 3D applications.</span>
-      </div>
-      <div class="mv__slider">
-        <img class="mv__image js-mv-image" src="assets/images/mv.jpg" alt="">
-      </div>
-    </div>
-    <ul class="list">
-      <li class="item"><img class="item__image js-item-image" src="assets/images/list1.jpg" alt=""></li>
-      <li class="item"><img class="item__image js-item-image" src="assets/images/list2.jpg" alt=""></li>
-      <li class="item"><img class="item__image js-item-image" src="assets/images/list3.jpg" alt=""></li>
-      <li class="item"><img class="item__image js-item-image" src="assets/images/list4.jpg" alt=""></li>
-      <li class="item"><img class="item__image js-item-image" src="assets/images/list5.jpg" alt=""></li>
+  <header class="header">
+    <h1 class="header__title">
+      <span class="header__title__number">033</span>Gallery
+    </h1>
+    <ul class="header__list">
+      <li class="header__item">
+        <a
+          href="https://github.com/taic-dev/webgl-works-32"
+          class="header__link"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Github</a
+        >
+      </li>
+      <li class="header__item">
+        <a
+          href="#"
+          class="header__link"
+          target="_blank"
+          rel="noopener noreferrer"
+          >X</a
+        >
+      </li>
+      <li class="header__item">
+        <a
+          href="https://www.tripo3d.ai/"
+          class="header__link"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Model</a
+        >
+      </li>
     </ul>
+  </header>
+  <main class="main">
+    <section class="gallery">
+      <div class="gallery__grid">
+        <div class="gallery__box mt-5 grid-column-span-5 grid-column-start-2">
+          <img class="gallery__image js-gallery-image" src="assets/images/image1.jpg" alt="">
+        </div>
+        <div class="gallery__box mt-8 grid-column-span-13 grid-column-start-10">
+          <img class="gallery__image js-gallery-image" src="assets/images/image2.jpg" alt="">
+        </div>
+      </div>
+      <div class="gallery__grid">
+        <div class="gallery__box mt-5 grid-column-span-8 grid-column-start-3">
+          <img class="gallery__image js-gallery-image" src="assets/images/image3.jpg" alt="">
+        </div>
+        <div class="gallery__box mt-10 grid-column-span-10 grid-column-start-14">
+          <img class="gallery__image js-gallery-image" src="assets/images/image4.jpg" alt="">
+        </div>
+      </div>
+      <div class="gallery__grid">
+        <div class="gallery__box mt-5 grid-column-span-15 grid-column-start-2">
+          <img class="gallery__image js-gallery-image" src="assets/images/image5.jpg" alt="">
+        </div>
+      </div>
+      <div class="gallery__grid">
+        <div class="gallery__box mt-5 grid-column-span-8 grid-column-start-2">
+          <img class="gallery__image js-gallery-image" src="assets/images/image7.jpg" alt="">
+        </div>
+        <div class="gallery__box mt-8 grid-column-span-15 grid-column-start-11">
+          <img class="gallery__image js-gallery-image" src="assets/images/image6.jpg" alt="">
+        </div>
+      </div>
+      <div class="gallery__grid">
+        <div class="gallery__box mt-5 grid-column-span-15 grid-column-start-2">
+          <img class="gallery__image js-gallery-image" src="assets/images/image8.jpg" alt="">
+        </div>
+        <div class="gallery__box mt-3 grid-column-span-10 grid-column-start-11">
+          <img class="gallery__image js-gallery-image" src="assets/images/image9.jpg" alt="">
+        </div>
+      </div>
+      <div class="gallery__grid">
+        <div class="gallery__box grid-column-span-8 grid-column-start-2">
+          <img class="gallery__image js-gallery-image" src="assets/images/image10.jpg" alt="">
+        </div>
+        <div class="gallery__box mt-5 grid-column-span-10 grid-column-start-13">
+          <img class="gallery__image js-gallery-image" src="assets/images/image11.jpg" alt="">
+        </div>
+      </div>
+    </section>
   </main>
-  <script type="module" src="./assets/ts/app.ts"></script>
+  <!-- <script type="mode" src="./assets/ts/app.ts"></script> -->
 </body>
 </html>
