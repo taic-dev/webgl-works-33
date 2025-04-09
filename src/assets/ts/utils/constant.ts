@@ -13,5 +13,5 @@ export const EASING = {
 export const DURATION = {
   SHORT: 0.3,
   BASE: 0.5,
-  FULL: 2.0,
+  FULL: 1.0,
 };

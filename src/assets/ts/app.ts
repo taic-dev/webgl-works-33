@@ -1,22 +1,19 @@
-import Lenis from 'lenis'
 import { gsap } from "gsap"
 import { App } from "./webgl/App";
+import { lenis } from "./modules/lenis";
+import { opening } from "./modules/opening";
 
-const lenis = new Lenis();
-const raf = (time: number) => {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
+lenis();
+opening();
 
-const webgl = new App();
-webgl.init();
-gsap.ticker.add(() => webgl.render());
+// const webgl = new App();
+// webgl.init();
+// gsap.ticker.add(() => webgl.render());
 
-window.addEventListener('scroll', () => {
-  webgl.update()
-})
+// window.addEventListener('scroll', () => {
+//   webgl.update()
+// })
 
-window.addEventListener('resize', () => {
-  webgl.resize()
-})
+// window.addEventListener('resize', () => {
+//   webgl.resize()
+// })

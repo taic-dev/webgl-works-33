@@ -1,0 +1,30 @@
+@use "../base/variables" as *;
+@use "../base/functions" as *;
+@use "../base/mixins" as *;
+
+.opening {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+.opening__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  font-size: rem(80);
+  font-weight: 600;
+}
+
+.opening-animation-text {
+  opacity: 0;
+  letter-spacing: 16px;
+  filter: blur(5px);
+  transition: opacity $duration-short $easing-transform,
+    letter-spacing $duration-short $easing-transform,
+    filter $duration-short $easing-transform;
+}

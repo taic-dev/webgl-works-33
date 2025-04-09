@@ -18,6 +18,11 @@ $design-size: (
 $color-white: #f4f4f4;
 $color-black: #101010;
 
+// duration
+$duration-short: 0.5s;
+$duration-base: 1s;
+$duration-long: 1.5s;
+
 // easing
 $easing-transform: cubic-bezier(0.43, 0.05, 0.17, 1);
 $easing-material: cubic-bezier(0.26, 0.16, 0.1, 1);
