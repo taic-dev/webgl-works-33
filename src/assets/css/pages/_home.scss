@@ -6,15 +6,14 @@
   --grid-column: 24;
 }
 
-.mv__image {
-  grid-column: span var(--grid-column);
-}
-
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(var(--grid-column), 1fr);
   gap: rem(40);
-  
+}
+
+.gallery__image {
+  opacity: 0;
 }
 
 // margin

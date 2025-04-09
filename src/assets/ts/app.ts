@@ -1,5 +1,13 @@
+import Lenis from 'lenis'
 import { gsap } from "gsap"
 import { App } from "./webgl/App";
+
+const lenis = new Lenis();
+const raf = (time: number) => {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
 const webgl = new App();
 webgl.init();

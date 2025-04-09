@@ -14,7 +14,7 @@ export class Mesh {
 
   constructor(setup: Setup) {
     this.setup = setup
-    this.elements = [...document.querySelectorAll<HTMLImageElement>('.js-item-image')];
+    this.elements = [...document.querySelectorAll<HTMLImageElement>('.js-gallery-image')];
     this.mesh = null
     this.meshes = []
     this.loader = null
