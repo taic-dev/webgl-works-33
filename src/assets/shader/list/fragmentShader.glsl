@@ -4,6 +4,7 @@ uniform float uTime;
 uniform vec2 uPlaneSize;
 uniform sampler2D uTexture;
 uniform vec2 uTextureSize;
+uniform float uAlpha;
 
 varying vec2 vUv;
 
@@ -25,8 +26,6 @@ void main() {
   );
 
   vec4 texture = texture2D(uTexture, fixedUv);
-  
-  if(texture.a < 1.0) discard;
 
-  gl_FragColor = vec4(texture.rgb, 1.0);
+  gl_FragColor = vec4(texture.rgb, uAlpha);
 }

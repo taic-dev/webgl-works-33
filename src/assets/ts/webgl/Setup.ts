@@ -10,6 +10,7 @@ export class Setup {
   ambientLight: THREE.AmbientLight | null
   directionalLight: THREE.DirectionalLight | null;
   loader: THREE.TextureLoader
+  clock: THREE.Clock | null
   guiValue: any
   controls: OrbitControls | null
 
@@ -22,6 +23,7 @@ export class Setup {
     this.controls = null;
     this.guiValue = null
     this.loader = new THREE.TextureLoader();
+    this.clock = new THREE.Clock();
 
     this.init();
   }

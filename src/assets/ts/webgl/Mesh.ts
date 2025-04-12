@@ -35,6 +35,8 @@ export class Mesh {
       uResolution: { value: new THREE.Vector2(PARAMS.WINDOW.W, PARAMS.WINDOW.H)},
       uMouse: { value: new THREE.Vector2(0, 0) },
       uTime: { value: 0.0 },
+      uAlpha: { value: 0.0 },
+      uVelocity: { value: 0.0 },
     };
 
     return {
@@ -52,6 +54,7 @@ export class Mesh {
       uniforms: uniforms,
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
+      transparent: true
     })
     this.mesh = new THREE.Mesh(geometry, material);
     this.setup.scene?.add(this.mesh);
@@ -72,6 +75,13 @@ export class Mesh {
       this.meshes[i].scale.y = info.dom.height;
       this.meshes[i].position.x = info.dom.x;
       this.meshes[i].position.y = info.dom.y;
+      (this.meshes[i].material as any).uniforms.uVelocity.value = window.velocity
+    })
+  }
+
+  raf() {
+    this.elements?.forEach((_,i) => {
+      (this.meshes[i].material as any).uniforms.uTime.value = this.setup.clock?.getElapsedTime();
     })
   }
 
