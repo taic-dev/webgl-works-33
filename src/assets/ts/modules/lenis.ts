@@ -8,4 +8,9 @@ export const lenis = () => {
     requestAnimationFrame(raf);
   };
   requestAnimationFrame(raf);
+
+  // window.lenis.on("scroll", (e: Lenis) => {
+  //   window.velocity = e.velocity;
+  //   console.log(e.velocity)
+  // });
 };

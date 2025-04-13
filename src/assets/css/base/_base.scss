@@ -4,7 +4,7 @@
 
 html {
   font-size: vw(16);
-  overflow-x: hidden;
+  overflow: hidden;
   overscroll-behavior: none;
 }
 
@@ -12,6 +12,7 @@ body {
   font-size: rem(16);
   color: $color-black;
   background-color: $color-white;
+  overflow: hidden;
 }
 
 img {

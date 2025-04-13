@@ -6,7 +6,13 @@
   --grid-column: 24;
 }
 
+.gallery {
+  position: relative;
+}
+
 .gallery__grid {
+  position: absolute;
+  left: 0;
   display: grid;
   grid-template-columns: repeat(var(--grid-column), 1fr);
   gap: rem(40);

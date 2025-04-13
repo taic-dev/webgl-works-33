@@ -6,7 +6,7 @@ float PI = 3.141592653589793;
 
 vec3 curve(vec3 pos, vec2 vUv) {
   float velocity = clamp(uVelocity, -20.0, 20.0);
-  pos.z=sin(pos.y*10.+uTime)*velocity;
+  pos.z=sin(pos.y*1.5+uTime)*velocity;
   pos.z*=1.5;
 
   return pos;
