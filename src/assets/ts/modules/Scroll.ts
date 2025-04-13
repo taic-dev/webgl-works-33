@@ -30,12 +30,20 @@ export class Scroll {
   }
 
   init() {
+    this.update();
+    this.addEventListeners();
+  }
+
+  update() {
     this.base.width = [];
     this.base.height = [];
+    this.domInfo.width = [];
+    this.domInfo.height = [];
+    this.domInfo.totalWidth = 0
+    this.domInfo.totalHeight = 0
     let additionWidth = 0;
     let additionHeight = 0;
-
-    this.contents?.forEach((v, i) => {
+    this.contents?.forEach((v) => {
       gsap.set(v, { y: additionHeight });
       this.base.width.push(additionWidth);
       this.base.height.push(additionHeight);
@@ -44,10 +52,8 @@ export class Scroll {
       additionWidth += v.clientWidth;
       additionHeight += v.clientHeight;
     });
-
     this.domInfo.totalWidth = this.domInfo.width.reduce((s, e) => s + e, 0);
     this.domInfo.totalHeight = this.domInfo.height.reduce((s, e) => s + e, 0);
-    this.addEventListeners();
   }
 
   loop(ele: HTMLElement, p: number, i: number) {
@@ -74,5 +80,9 @@ export class Scroll {
 
   addEventListeners() {
     window.addEventListener("wheel", this.onWheel.bind(this));
+  }
+
+  resize() {
+    this.update();
   }
 }

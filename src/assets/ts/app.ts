@@ -1,4 +1,4 @@
-import { gsap } from "gsap"
+import { gsap } from "gsap";
 import Lenis from "lenis";
 import { lenis } from "./modules/lenis";
 import { App } from "./webgl/App";
@@ -12,8 +12,8 @@ lenis();
 const webgl = new App();
 webgl.init();
 gsap.ticker.add(() => {
-  webgl.render()
-  webgl.update()
+  webgl.render();
+  webgl.update();
 });
 
 // scroll
@@ -22,9 +22,10 @@ scroll.init();
 
 // animation
 opening();
-const animation = new Animation(webgl.setup, webgl.mesh)
+const animation = new Animation(webgl.setup, webgl.mesh);
 animation.openingGl();
 
-window.addEventListener('resize', () => {
-  webgl.resize()
-})
+window.addEventListener("resize", () => {
+  webgl.resize();
+  scroll.resize();
+});
