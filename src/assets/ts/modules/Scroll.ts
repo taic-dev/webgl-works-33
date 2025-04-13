@@ -1,5 +1,7 @@
 import { gsap } from "gsap";
 
+const lerp = (p1: number, p2: number, t: number) => p1 + (p2 - p1) * t;
+
 export class Scroll {
   contents: HTMLElement[] | null;
   base: {
@@ -12,6 +14,12 @@ export class Scroll {
     totalWidth: number;
     totalHeight: number;
   };
+  scroll: {
+    ease: number,
+    current: number,
+    target: number,
+    last: number,
+  }
 
   constructor() {
     this.contents = [
@@ -27,6 +35,12 @@ export class Scroll {
       totalWidth: 0,
       totalHeight: 0,
     };
+    this.scroll = {
+      ease: 0.1,
+      current: 0,
+      target: 0,
+      last: 0,
+    }
   }
 
   init() {
@@ -39,8 +53,8 @@ export class Scroll {
     this.base.height = [];
     this.domInfo.width = [];
     this.domInfo.height = [];
-    this.domInfo.totalWidth = 0
-    this.domInfo.totalHeight = 0
+    this.domInfo.totalWidth = 0;
+    this.domInfo.totalHeight = 0;
     let additionWidth = 0;
     let additionHeight = 0;
     this.contents?.forEach((v) => {
@@ -70,12 +84,25 @@ export class Scroll {
     }
   }
 
-  onWheel(event: WheelEvent) {
+  raf() {
+    this.scroll.current = lerp(
+      this.scroll.current,
+      this.scroll.target,
+      this.scroll.ease
+    );
+
     this.contents?.forEach((v, i) => {
-      this.base.height[i] = this.base.height[i] - event.deltaY;
+      this.base.height[i] = this.base.height[i] - this.scroll.current;
       gsap.set(v, { y: this.base.height[i] });
       this.loop(v, this.base.height[i], i);
     });
+
+    this.scroll.target *= 0.9;
+    window.velocity = this.scroll.current
+  }
+
+  onWheel(event: WheelEvent) {
+    this.scroll.target += event.deltaY * 0.05;
   }
 
   addEventListeners() {
