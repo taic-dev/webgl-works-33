@@ -3,7 +3,7 @@ import { lenis } from "./modules/lenis";
 import { App } from "./webgl/App";
 import { Animation } from "./webgl/Animation";
 import { opening } from "./modules/opening";
-import { Scroll } from "./modules/scroll";
+import { Scroll } from "./modules/Scroll";
 
 lenis();
 
