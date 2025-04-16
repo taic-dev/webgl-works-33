@@ -1,6 +1,7 @@
 interface Window {
   lenis: any; // windowにlenisを追加するために指定
   velocity: number
+  isPlaying: boolean
 }
 
 declare module '*.glsl' {

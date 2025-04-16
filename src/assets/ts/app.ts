@@ -1,11 +1,8 @@
 import { gsap } from "gsap";
-import { lenis } from "./modules/lenis";
 import { App } from "./webgl/App";
 import { Animation } from "./webgl/Animation";
 import { opening } from "./modules/opening";
 import { Scroll } from "./modules/Scroll";
-
-lenis();
 
 // scroll
 const scroll = new Scroll();
