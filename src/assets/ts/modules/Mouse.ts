@@ -8,9 +8,8 @@ export class Mouse {
   stalker: HTMLElement | null;
   viewer: HTMLElement | null;
   close: HTMLElement | null;
-  images: HTMLElement[] | null;
+  images: HTMLElement[];
   imageIndex: number;
-  beforePosition: { x: number; y: number }[];
   beforeSize: { x: number; y: number }[];
 
   constructor(mesh: Mesh) {
@@ -19,10 +18,9 @@ export class Mouse {
     this.viewer = document.querySelector<HTMLElement>(".js-gallery-viewer");
     this.close = document.querySelector<HTMLElement>(".js-close");
     this.images = [
-      ...document.querySelectorAll<HTMLElement>(".js-gallery-image"),
+      ...document.querySelectorAll<HTMLElement>(".js-gallery-image")
     ];
     this.imageIndex = 0;
-    this.beforePosition = [];
     this.beforeSize = [];
   }
 
@@ -91,6 +89,7 @@ export class Mouse {
 
   onClose() {
     window.isView = false;
+    const imageElement = getElementPositionAndSize(this.images[this.imageIndex])
 
     gsap.set(this.images, { pointerEvents: "auto" });
     gsap.set(this.viewer, { zIndex: 99 });
@@ -103,8 +102,8 @@ export class Mouse {
     });
 
     gsap.to(this.mesh.meshes[this.imageIndex].position, {
-      x: this.beforePosition[this.imageIndex].x,
-      y: this.beforePosition[this.imageIndex].y,
+      x: imageElement.dom.x,
+      y: imageElement.dom.y,
       z: 1,
       duration: 0.5,
       ease: EASING.TRANSFORM,
@@ -159,13 +158,11 @@ export class Mouse {
   update() {
     this.refresh();
     this.mesh.meshes.forEach((v) => {
-      this.beforePosition.push({ x: v.position.x, y: v.position.y });
       this.beforeSize.push({ x: v.scale.x, y: v.scale.y });
     });
   }
 
   refresh() {
-    this.beforePosition = [];
     this.beforeSize = [];
   }
 
