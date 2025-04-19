@@ -79,6 +79,13 @@ export class Mesh {
     })
   }
 
+  stopMesh() {
+    if(!this.mesh) return;
+    this.elements?.forEach((_, i) => {
+      (this.meshes[i].material as any).uniforms.uVelocity.value = 0
+    })
+  }
+
   raf() {
     this.elements?.forEach((_,i) => {
       (this.meshes[i].material as any).uniforms.uTime.value = this.setup.clock?.getElapsedTime();

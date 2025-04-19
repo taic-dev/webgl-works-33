@@ -21,7 +21,11 @@ export class App {
   }
 
   update() {
-    this.mesh.updateMesh();
+    if(!window.isView) {
+      this.mesh.updateMesh();
+    } else {
+      this.mesh.stopMesh();
+    }
   }
 
   resize() {

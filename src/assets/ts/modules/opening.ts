@@ -4,7 +4,10 @@ import { EASING, DURATION } from "../utils/constant";
 export const opening = () => {
   window.isPlaying = true;
   const openingText = document.querySelector(".js-opening-text");
+  const images = [...document.querySelectorAll<HTMLElement>('.js-gallery-image')];
   const tl = gsap.timeline();
+
+  gsap.set(images, { pointerEvents: "none" })
 
   tl.to(openingText, {
     opacity: 1,
@@ -21,6 +24,7 @@ export const opening = () => {
     ease: EASING.TRANSFORM,
     onComplete: () => {
       window.isPlaying = false;
+      gsap.set(images, { pointerEvents: "auto" })
     },
   });
 };

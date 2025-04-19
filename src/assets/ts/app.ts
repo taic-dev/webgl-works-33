@@ -3,10 +3,7 @@ import { App } from "./webgl/App";
 import { Animation } from "./webgl/Animation";
 import { opening } from "./modules/opening";
 import { Scroll } from "./modules/Scroll";
-
-// scroll
-const scroll = new Scroll();
-scroll.init();
+import { Mouse } from "./modules/Mouse";
 
 // webgl
 const webgl = new App();
@@ -21,6 +18,14 @@ gsap.ticker.add(() => {
 opening();
 const animation = new Animation(webgl.setup, webgl.mesh);
 animation.openingGl();
+
+// scroll
+const scroll = new Scroll();
+scroll.init();
+
+// mouse
+const mouse = new Mouse(webgl.mesh);
+mouse.init();
 
 window.addEventListener("resize", () => {
   webgl.resize();
