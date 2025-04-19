@@ -60,6 +60,24 @@
   transition: scale $duration-short $easing-transform;
 }
 
+.gallery__viewer__vertical {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: rem(500);
+  height: rem(800);
+}
+
+.gallery__viewer__horizontal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: rem(900);
+  height: rem(600);
+}
+
 .gallery__grid {
   position: absolute;
   left: 0;
@@ -71,7 +89,16 @@
 
 .gallery__image {
   opacity: 0;
+  object-fit: cover;
   cursor: pointer;
+}
+
+.--vertical {
+  aspect-ratio: 5 / 8;
+}
+
+.--horizontal {
+  aspect-ratio: 9 / 6;
 }
 
 // margin

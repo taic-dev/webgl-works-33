@@ -104,8 +104,6 @@ export class Scroll {
   onWheel(event: WheelEvent) {
     if(window.isPlaying || window.isView) return
     this.scroll.target += event.deltaY * 0.08;
-
-    console.log(this.scroll.target)
   }
 
   addEventListeners() {

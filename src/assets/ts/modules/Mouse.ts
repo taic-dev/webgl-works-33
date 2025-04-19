@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
 import { EASING } from "../utils/constant";
 import { Mesh } from "../webgl/Mesh";
+import { getElementPositionAndSize } from "../utils/getElementSize";
 
 export class Mouse {
   mesh: Mesh;
@@ -30,6 +31,13 @@ export class Mouse {
   }
 
   onOpen(i: number) {
+    const horizontal = getElementPositionAndSize(
+      document.querySelector(".js-gallery-viewer-horizontal")!
+    );
+    const vertical = getElementPositionAndSize(
+      document.querySelector(".js-gallery-viewer-vertical")!
+    );
+
     window.isView = true;
     this.imageIndex = i;
     this.update();
@@ -60,19 +68,20 @@ export class Mouse {
     });
 
     this.mesh.meshes.forEach((mesh, i) => {
+      const aspect = mesh.scale.x > mesh.scale.y ? horizontal : vertical;
       if (i !== this.imageIndex) {
         gsap.to(mesh.scale, {
-          x: mesh.scale.x / 2,
-          y: mesh.scale.y / 2,
-          z: mesh.scale.z / 2,
+          x: 0,
+          y: 0,
+          z: 0,
           duration: 0.5,
-          ease: EASING.OUT_BACK,
+          ease: EASING.TRANSFORM,
         });
       } else {
         gsap.to(mesh.scale, {
-          x: mesh.scale.x * 2,
-          y: mesh.scale.y * 2,
-          z: mesh.scale.z * 2,
+          x: aspect.dom.width,
+          y: aspect.dom.height,
+          z: 1,
           duration: 0.5,
           ease: EASING.OUT_BACK,
         });
@@ -156,8 +165,8 @@ export class Mouse {
   }
 
   refresh() {
-    this.beforePosition = []
-    this.beforeSize = []
+    this.beforePosition = [];
+    this.beforeSize = [];
   }
 
   resize() {
