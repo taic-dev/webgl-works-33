@@ -93,6 +93,7 @@ export class Mesh {
   }
 
   resize() {
+    if(window.isView) return;
     this.updateMesh();
   }
 }

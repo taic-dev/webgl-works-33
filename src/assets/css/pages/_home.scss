@@ -60,10 +60,16 @@
   transition: scale $duration-short $easing-transform;
 }
 
+.close span {
+  display: block;
+  text-align: center;
+}
+
 .gallery__viewer__vertical {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: -1;
   transform: translate(-50%, -50%);
   width: rem(500);
   height: rem(800);
@@ -73,6 +79,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: -1;
   transform: translate(-50%, -50%);
   width: rem(900);
   height: rem(600);

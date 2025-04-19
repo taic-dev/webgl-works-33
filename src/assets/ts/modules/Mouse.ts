@@ -167,6 +167,7 @@ export class Mouse {
   }
 
   resize() {
+    if(window.isView) return;
     this.update();
   }
 }
