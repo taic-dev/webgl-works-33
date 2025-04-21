@@ -1,7 +1,10 @@
 import { gsap } from "gsap";
 import { EASING } from "../utils/constant";
 import { Mesh } from "../webgl/Mesh";
-import { getElementPositionAndSize } from "../utils/getElementSize";
+import {
+  getElementPositionAndSize,
+  getMouseCoordinate,
+} from "../utils/getPositionUtils";
 
 export class Mouse {
   mesh: Mesh;
@@ -9,6 +12,8 @@ export class Mouse {
   viewer: HTMLElement | null;
   close: HTMLElement | null;
   images: HTMLElement[];
+  horizontal: HTMLElement | null;
+  vertical: HTMLElement | null;
   imageIndex: number;
   beforeSize: { x: number; y: number }[];
 
@@ -18,8 +23,11 @@ export class Mouse {
     this.viewer = document.querySelector<HTMLElement>(".js-gallery-viewer");
     this.close = document.querySelector<HTMLElement>(".js-close");
     this.images = [
-      ...document.querySelectorAll<HTMLElement>(".js-gallery-image")
+      ...document.querySelectorAll<HTMLElement>(".js-gallery-image"),
     ];
+    this.horizontal = document.querySelector(".js-gallery-viewer-horizontal")!;
+    this.vertical = document.querySelector(".js-gallery-viewer-vertical")!;
+
     this.imageIndex = 0;
     this.beforeSize = [];
   }
@@ -29,17 +37,20 @@ export class Mouse {
   }
 
   onOpen(i: number) {
-    const horizontal = getElementPositionAndSize(
-      document.querySelector(".js-gallery-viewer-horizontal")!
-    );
-    const vertical = getElementPositionAndSize(
-      document.querySelector(".js-gallery-viewer-vertical")!
-    );
-
+    if (!this.horizontal || !this.vertical) return;
     window.isView = true;
     this.imageIndex = i;
     this.update();
 
+    const isLandscape =
+      this.mesh.meshes[i].scale.x > this.mesh.meshes[i].scale.y;
+    const aspect = getElementPositionAndSize(
+      isLandscape ? this.horizontal : this.vertical
+    );
+
+    gsap.set(isLandscape ? this.vertical : this.horizontal, {
+      display: "none",
+    });
     gsap.set(this.images, { pointerEvents: "none" });
     gsap.set(this.viewer, { zIndex: 999 });
 
@@ -66,7 +77,6 @@ export class Mouse {
     });
 
     this.mesh.meshes.forEach((mesh, i) => {
-      const aspect = mesh.scale.x > mesh.scale.y ? horizontal : vertical;
       if (i !== this.imageIndex) {
         gsap.to(mesh.scale, {
           x: 0,
@@ -89,8 +99,12 @@ export class Mouse {
 
   onClose() {
     window.isView = false;
-    const imageElement = getElementPositionAndSize(this.images[this.imageIndex])
+    const imageElement = getElementPositionAndSize(
+      this.images[this.imageIndex]
+    );
 
+    gsap.set(this.horizontal, { display: "block" });
+    gsap.set(this.vertical, { display: "block" });
     gsap.set(this.images, { pointerEvents: "auto" });
     gsap.set(this.viewer, { zIndex: 99 });
 
@@ -119,7 +133,7 @@ export class Mouse {
     });
   }
 
-  onMouseenter() {
+  onMouseEnter() {
     gsap.to(this.stalker, {
       scale: 1,
       opacity: 1,
@@ -128,7 +142,7 @@ export class Mouse {
     });
   }
 
-  onMouseleave() {
+  onMouseLeave() {
     gsap.to(this.stalker, {
       scale: 0,
       opacity: 0,
@@ -137,7 +151,35 @@ export class Mouse {
     });
   }
 
-  onMousemove(e: MouseEvent) {
+  onModalMove(e: MouseEvent) {
+    const mesh = this.mesh.meshes[this.imageIndex];
+    const { x, y } = getMouseCoordinate(e);
+    (mesh.material as any).uniforms.uMouse.value = { x, y };
+
+    gsap.to(mesh.rotation, {
+      x: y * 0.2,
+      y: -x * 0.2,
+      duration: 0.5,
+      ease: "power1.out",
+    });
+  }
+
+  onModalLeave() {
+    const mesh = this.mesh.meshes[this.imageIndex];
+    gsap.to((mesh.material as any).uniforms.uMouse.value, {
+      x: 0,
+      y: 0,
+      duration: 0.5,
+    });
+
+    gsap.to(mesh.rotation, {
+      x: 0,
+      y: 0,
+      duration: 0.5,
+    });
+  }
+
+  onMouseMove(e: MouseEvent) {
     const x = e.clientX;
     const y = e.clientY;
 
@@ -146,13 +188,20 @@ export class Mouse {
 
   addEventListeners() {
     this.images?.forEach((image, i) => {
-      image.addEventListener("mouseenter", this.onMouseenter.bind(this));
-      image.addEventListener("mouseleave", this.onMouseleave.bind(this));
+      image.addEventListener("mouseenter", this.onMouseEnter.bind(this));
+      image.addEventListener("mouseleave", this.onMouseLeave.bind(this));
       image.addEventListener("click", () => this.onOpen(i));
     });
 
+    window.addEventListener("mousemove", this.onMouseMove.bind(this));
+    this.horizontal?.addEventListener("mousemove", (e) => this.onModalMove(e));
+    this.vertical?.addEventListener("mousemove", (e) => this.onModalMove(e));
+    this.horizontal?.addEventListener(
+      "mouseleave",
+      this.onModalLeave.bind(this)
+    );
+    this.vertical?.addEventListener("mouseleave", this.onModalLeave.bind(this));
     this.close?.addEventListener("click", this.onClose.bind(this));
-    window.addEventListener("mousemove", this.onMousemove.bind(this));
   }
 
   update() {
@@ -167,7 +216,7 @@ export class Mouse {
   }
 
   resize() {
-    if(window.isView) return;
+    if (window.isView) return;
     this.update();
   }
 }

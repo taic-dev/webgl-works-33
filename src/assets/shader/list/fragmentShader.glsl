@@ -25,7 +25,9 @@ void main() {
     (vUv.y - 0.5) * ratio.y + 0.5
   );
 
-  vec4 texture = texture2D(uTexture, fixedUv);
+  float r = texture2D(uTexture, fixedUv+uMouse.x*0.01).r;
+  float g = texture2D(uTexture, fixedUv+uMouse.y*0.01).g;
+  float b = texture2D(uTexture, fixedUv).b;
 
-  gl_FragColor = vec4(texture.rgb, uAlpha);
+  gl_FragColor = vec4(vec3(r, g, b), uAlpha);
 }

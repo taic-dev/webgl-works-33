@@ -1,38 +1,45 @@
 import * as THREE from "three";
 import { Setup } from "./Setup";
-import fragmentShader from "../../shader/list/fragmentShader.glsl"
-import vertexShader from "../../shader/list/vertexShader.glsl"
+import fragmentShader from "../../shader/list/fragmentShader.glsl";
+import vertexShader from "../../shader/list/vertexShader.glsl";
 import { PARAMS } from "./constants";
-import { getImagePositionAndSize, ImagePositionAndSize } from "../utils/getElementSize";
+import {
+  getImagePositionAndSize,
+  ImagePositionAndSize,
+} from "../utils/getPositionUtils";
 
 export class Mesh {
-  setup: Setup
-  elements: HTMLImageElement[] | null
-  mesh: THREE.Mesh | null
-  meshes: THREE.Mesh[]
-  loader: THREE.TextureLoader | null
+  setup: Setup;
+  elements: HTMLImageElement[] | null;
+  mesh: THREE.Mesh | null;
+  meshes: THREE.Mesh[];
+  loader: THREE.TextureLoader | null;
 
   constructor(setup: Setup) {
-    this.setup = setup
-    this.elements = [...document.querySelectorAll<HTMLImageElement>('.js-gallery-image')];
-    this.mesh = null
-    this.meshes = []
-    this.loader = null
+    this.setup = setup;
+    this.elements = [
+      ...document.querySelectorAll<HTMLImageElement>(".js-gallery-image"),
+    ];
+    this.mesh = null;
+    this.meshes = [];
+    this.loader = null;
   }
 
   init() {
     this.elements?.forEach((element) => {
       const info = getImagePositionAndSize(element);
-      this.setUniforms(info)
-      this.setMesh(info)
-    })
+      this.setUniforms(info);
+      this.setMesh(info);
+    });
   }
 
   setUniforms(info: ImagePositionAndSize) {
     const loader = this.setup.loader;
-    
+
     const commonUniforms = {
-      uResolution: { value: new THREE.Vector2(PARAMS.WINDOW.W, PARAMS.WINDOW.H)},
+      uResolution: {
+        value: new THREE.Vector2(PARAMS.WINDOW.W, PARAMS.WINDOW.H),
+      },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uTime: { value: 0.0 },
       uAlpha: { value: 0.0 },
@@ -40,11 +47,13 @@ export class Mesh {
     };
 
     return {
-      uPlaneSize: { value: new THREE.Vector2(info.dom.width, info.dom.height)},
+      uPlaneSize: { value: new THREE.Vector2(info.dom.width, info.dom.height) },
       uTexture: { value: loader.load(info.image.src) },
-      uTextureSize: { value: new THREE.Vector2(info.image.width, info.image.height) },
-      ...commonUniforms
-    }
+      uTextureSize: {
+        value: new THREE.Vector2(info.image.width, info.image.height),
+      },
+      ...commonUniforms,
+    };
   }
 
   setMesh(info: ImagePositionAndSize) {
@@ -54,8 +63,8 @@ export class Mesh {
       uniforms: uniforms,
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
-      transparent: true
-    })
+      transparent: true,
+    });
     this.mesh = new THREE.Mesh(geometry, material);
     this.setup.scene?.add(this.mesh);
 
@@ -68,32 +77,34 @@ export class Mesh {
   }
 
   updateMesh() {
-    if(!this.mesh) return;
+    if (!this.mesh) return;
     this.elements?.forEach((element, i) => {
       const info = getImagePositionAndSize(element);
       this.meshes[i].scale.x = info.dom.width;
       this.meshes[i].scale.y = info.dom.height;
       this.meshes[i].position.x = info.dom.x;
       this.meshes[i].position.y = info.dom.y;
-      (this.meshes[i].material as any).uniforms.uVelocity.value = window.velocity
-    })
+      (this.meshes[i].material as any).uniforms.uVelocity.value =
+        window.velocity;
+    });
   }
 
   stopMesh() {
-    if(!this.mesh) return;
+    if (!this.mesh) return;
     this.elements?.forEach((_, i) => {
-      (this.meshes[i].material as any).uniforms.uVelocity.value = 0
-    })
+      (this.meshes[i].material as any).uniforms.uVelocity.value = 0;
+    });
   }
 
   raf() {
-    this.elements?.forEach((_,i) => {
-      (this.meshes[i].material as any).uniforms.uTime.value = this.setup.clock?.getElapsedTime();
-    })
+    this.elements?.forEach((_, i) => {
+      (this.meshes[i].material as any).uniforms.uTime.value =
+        this.setup.clock?.getElapsedTime();
+    });
   }
 
   resize() {
-    if(window.isView) return;
+    if (window.isView) return;
     this.updateMesh();
   }
 }

@@ -15,6 +15,15 @@ export const getElementCoordinates = (rect: DOMRect) => {
   return { x, y };
 };
 
+export const getMouseCoordinate = (e: MouseEvent) => {
+  e.preventDefault();
+
+  const x = (e.clientX / window.innerWidth) * 2 - 1;
+  const y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+  return { x, y };
+};
+
 export const getElementPositionAndSize = (
   element: HTMLElement
 ): ElementPositionAndSize => {
