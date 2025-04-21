@@ -154,7 +154,12 @@ export class Mouse {
   onModalMove(e: MouseEvent) {
     const mesh = this.mesh.meshes[this.imageIndex];
     const { x, y } = getMouseCoordinate(e);
-    (mesh.material as any).uniforms.uMouse.value = { x, y };
+
+    gsap.to((mesh.material as any).uniforms.uMouse.value, {
+      x,
+      y,
+      duration: 0.5,
+    });
 
     gsap.to(mesh.rotation, {
       x: y * 0.2,
