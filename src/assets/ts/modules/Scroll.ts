@@ -19,8 +19,9 @@ export class Scroll {
     ease: number,
     current: number,
     target: number,
-    last: number,
+    position: number,
   }
+  start: number
 
   constructor() {
     this.contents = [
@@ -40,8 +41,9 @@ export class Scroll {
       ease: 0.05,
       current: 0,
       target: 0,
-      last: 0,
+      position: 0,
     }
+    this.start = 0
   }
 
   init() {
@@ -112,8 +114,33 @@ export class Scroll {
     this.scroll.target += speed * 0.5;
   }
 
+  onTouchStart(event: TouchEvent) {
+    if(window.isPlaying) return
+    window.isDown = true
+    this.scroll.position = this.scroll.current;
+    this.start = event.touches ? event.touches[0].clientY : (event as any).clientY;
+  }
+
+  onTouchMove(event: TouchEvent) {
+    if(window.isPlaying || !window.isDown) return
+    
+    const y = event.touches ? event.touches[0].clientY : (event as any).clientY;
+    const distance = (this.start - y) * 0.1;
+
+    this.scroll.target = this.scroll.position + distance;
+
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    if(window.isPlaying || !window.isDown) return
+    window.isDown = false
+  }
+
   addEventListeners() {
     window.addEventListener("wheel", this.onWheel.bind(this));
+    window.addEventListener("touchstart", (e) => this.onTouchStart(e));
+    window.addEventListener('touchmove', (e) => this.onTouchMove(e))
+    window.addEventListener("touchend", (e) => this.onTouchEnd(e));
   }
 
   resize() {

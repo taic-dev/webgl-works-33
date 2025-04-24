@@ -73,6 +73,11 @@
   transform: translate(-50%, -50%);
   width: rem(500);
   height: rem(800);
+
+  @include sp {
+    width: rem(600);
+    height: rem(900);    
+  }
 }
 
 .gallery__viewer__horizontal {
@@ -85,8 +90,8 @@
   height: rem(600);
 
   @include sp {
-    width: rem(700);
-    height: rem(500);    
+    width: rem(600);
+    height: rem(400);    
   }
 }
 

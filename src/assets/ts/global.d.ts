@@ -4,6 +4,7 @@ interface Window {
   imageIndex: number
   isPlaying: boolean
   isView: boolean
+  isDown: boolean
 }
 
 declare module '*.glsl' {
