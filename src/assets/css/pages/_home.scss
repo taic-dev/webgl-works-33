@@ -83,6 +83,11 @@
   transform: translate(-50%, -50%);
   width: rem(900);
   height: rem(600);
+
+  @include sp {
+    width: rem(700);
+    height: rem(500);    
+  }
 }
 
 .gallery__grid {
@@ -92,6 +97,12 @@
   display: grid;
   grid-template-columns: repeat(var(--grid-column), 1fr);
   gap: rem(40);
+
+  @include sp {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
 }
 
 .gallery__image {
@@ -112,6 +123,10 @@
 @for $i from 1 through 10 {
   .mt-#{$i} {
     margin-top: rem(30 * $i);
+
+    @include sp {
+      margin-top: 40px;
+    }
   }
 }
 
