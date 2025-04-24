@@ -126,7 +126,7 @@ export class Scroll {
   onTouchMove(event: TouchEvent) {
     if (window.isPlaying || !window.isDown) return;
     const y = event.touches ? event.touches[0].clientY : (event as any).clientY;
-    const distance = (this.start - y) * 0.5;
+    const distance = (this.start - y) * 0.3;
     this.scroll.target = this.scroll.position + distance;
   }
 
