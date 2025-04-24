@@ -23,7 +23,7 @@
 
 .opening-animation-text {
   opacity: 0;
-  letter-spacing: 16px;
+  letter-spacing: rem(16);
   filter: blur(5px);
   transition: opacity $duration-short $easing-transform,
     letter-spacing $duration-short $easing-transform,
