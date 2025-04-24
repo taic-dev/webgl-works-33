@@ -34,7 +34,7 @@ export class Setup {
     this.setCamera();
     this.setAmbientLight();
     this.setDirectionalLight();
-    this.setGui();
+    // this.setGui();
     // this.setHelper();
   }
 
