@@ -11,7 +11,6 @@ webgl.init();
 gsap.ticker.add(() => {
   webgl.render();
   webgl.update();
-  scroll.raf();
 });
 
 // animation

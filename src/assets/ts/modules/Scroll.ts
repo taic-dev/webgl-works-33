@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import NormalizeWheel from 'normalize-wheel'
 
 const lerp = (p1: number, p2: number, t: number) => p1 + (p2 - p1) * t;
 
@@ -36,7 +37,7 @@ export class Scroll {
       totalHeight: 0,
     };
     this.scroll = {
-      ease: 0.1,
+      ease: 0.05,
       current: 0,
       target: 0,
       last: 0,
@@ -44,6 +45,7 @@ export class Scroll {
   }
 
   init() {
+    this.raf();
     this.update();
     this.addEventListeners();
   }
@@ -97,13 +99,19 @@ export class Scroll {
       this.loop(v, this.base.height[i], i);
     });
 
-    this.scroll.target *= 0.9;
+    this.scroll.target *= 0.5;
+    console.log(this.scroll.target)
     window.velocity = this.scroll.current
+
+    requestAnimationFrame(this.raf.bind(this))
   }
 
   onWheel(event: WheelEvent) {
     if(window.isPlaying || window.isView) return
-    this.scroll.target += event.deltaY * 0.08;
+    const normalized = NormalizeWheel(event);
+    console.log(normalized)
+    const speed = normalized.pixelY
+    this.scroll.target += speed * 0.5;
   }
 
   addEventListeners() {
