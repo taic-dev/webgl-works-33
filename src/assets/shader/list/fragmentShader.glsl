@@ -5,6 +5,7 @@ uniform vec2 uPlaneSize;
 uniform sampler2D uTexture;
 uniform vec2 uTextureSize;
 uniform float uAlpha;
+uniform float uVelocity;
 
 varying vec2 vUv;
 
@@ -25,8 +26,10 @@ void main() {
     (vUv.y - 0.5) * ratio.y + 0.5
   );
 
-  float r = texture2D(uTexture, fixedUv+uMouse.x*0.01).r;
-  float g = texture2D(uTexture, fixedUv+uMouse.y*0.01).g;
+  float velocity=uVelocity*0.0005;
+
+  float r = texture2D(uTexture, fixedUv+velocity+uMouse.x*0.01).r;
+  float g = texture2D(uTexture, fixedUv+velocity+uMouse.y*0.01).g;
   float b = texture2D(uTexture, fixedUv).b;
 
   gl_FragColor = vec4(vec3(r, g, b), uAlpha);

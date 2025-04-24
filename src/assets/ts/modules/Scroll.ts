@@ -100,7 +100,6 @@ export class Scroll {
     });
 
     this.scroll.target *= 0.5;
-    console.log(this.scroll.target)
     window.velocity = this.scroll.current
 
     requestAnimationFrame(this.raf.bind(this))
@@ -109,7 +108,6 @@ export class Scroll {
   onWheel(event: WheelEvent) {
     if(window.isPlaying || window.isView) return
     const normalized = NormalizeWheel(event);
-    console.log(normalized)
     const speed = normalized.pixelY
     this.scroll.target += speed * 0.5;
   }
